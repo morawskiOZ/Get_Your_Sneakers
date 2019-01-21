@@ -3,6 +3,12 @@ node_modules/
 *.log
 haters/
 .next/
+.next
 .build/
 layout.md
 variables.env
+
+# IDE
+/.idea
+/.awcache
+/.vscode
