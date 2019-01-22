@@ -8,7 +8,7 @@ Router.onRouteChangeStart = () => {
     NProgress.start()
 }
 Router.onRouteChangeComplete = () => {
-    NProgress.done()
+    NProgress.done()    
 }
 Router.onRouteChangeError = () => {
     NProgress.done()
