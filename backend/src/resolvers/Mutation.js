@@ -3,13 +3,23 @@ const jwt = require("jsonwebtoken");
 const { randomBytes } = require("crypto");
 const { promisify } = require("util");
 
+const { transport, makeANiceEmail } = require("../mail");
+
 const Mutations = {
   async createItem(parent, args, ctx, info) {
     // TODO: Check if they are logged in
-
+    if(!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!')
+    }
     const item = await ctx.db.mutation.createItem(
       {
         data: {
+          // way to creacte relationship between user and item
+          user: {
+            connect: {
+              id: ctx.request.userId,
+            }
+          },
           ...args
         }
       },
@@ -55,7 +65,7 @@ const Mutations = {
         data: {
           ...args,
           password,
-          permission: {
+          permissions: {
             set: ["USER"]
           }
         }
@@ -118,14 +128,22 @@ const Mutations = {
     // set a reset token and expiry
     const randomBytesPromiseified = promisify(randomBytes);
     const resetToken = (await randomBytesPromiseified(20)).toString("hex");
-    const resetTokenExpiry = Date.now() + 60 * 60 * 1000;
+    const resetTokenExpiry = Date.now() + 3600000;
     const res = await ctx.db.mutation.updateUser({
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry }
     });
-    console.log(res);
-    return { message: "bravo" };
     // email the reset token
+    const mailRes = await transport.sendMail({
+      from: "Piotrek@wp.pl",
+      to: user.email,
+      subject: " your password reset",
+      html: makeANiceEmail(`Your Password Reset Token is here \n\n
+      <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}"> Click here to reset!</a>`)
+    });
+
+    // return a msg
+    return { message: "bravo" };
   },
 
   async resetPassword(parent, args, ctx, info) {
@@ -138,7 +156,7 @@ const Mutations = {
     const [user] = await ctx.db.query.users({
       where: {
         resetToken: args.resetToken,
-        resetTokenExpiry_gte: Date.now() - 60 * 60 * 1000
+        resetTokenExpiry_gte: Date.now() - 3600000
       }
     });
     if (!user) {

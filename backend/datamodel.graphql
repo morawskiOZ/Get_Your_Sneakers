@@ -14,7 +14,7 @@ type User {
   password: String!
   resetToken: String
   resetTokenExpiry: Float
-  permission: [Permission]
+  permissions: [Permission]
 }
 type Item {
   id: ID! @unique
@@ -23,7 +23,5 @@ type Item {
   image: String
   largeImage: String
   price: Int!
-  # createdAt: DateTime!
-  # updatedAt: DateTime!
-  # user: User!
+  user: User!
 }
