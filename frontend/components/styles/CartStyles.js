@@ -41,6 +41,7 @@ const CartStyles = styled.div`
     padding: 0;
     list-style: none;
     overflow: scroll;
+    overflow-x: hidden;
   }
 `;
 

@@ -15,7 +15,7 @@ const SickButton = styled.button`
   &[disabled] {
     opacity: 0.5;
   }
-  width: 7vw !important;
+  width: 8vw !important;
   min-width: 110px;
 `;
 

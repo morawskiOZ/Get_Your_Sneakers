@@ -223,6 +223,64 @@ const Mutations = {
       },
       info
     );
+  },
+  async addToCart(parent, args, ctx, info) {
+    // user sing in?
+    const { userId } = ctx.request;
+    if (!userId) {
+      throw new Error("You must be signed in to do that!");
+    }
+    // query the user current cart
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        item: { id: args.id },
+        user: { id: userId }
+      }
+    });
+    // check if item is already in cart
+    if (existingCartItem) {
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 }
+        },
+        info
+      );
+    }
+    //if not create a new cart item
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: { connect: { id: userId } },
+          item: { connect: { id: args.id } }
+        }
+      },
+      info
+    );
+  },
+  async removeFromCart(parent, args, ctx, info) {
+    // 1. Find the cart item
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: {
+          id: args.id
+        }
+      },
+      `{id, user { id}}`
+    );
+    // make sure we find an item
+    if (!cartItem) throw new Error("No cartItem");
+    // make sure they own the cart item
+    if (cartItem.user.id !== ctx.request.userId) {
+      throw new Error("Not gonna happen");
+    }
+    // delete that cart item
+    return ctx.db.mutation.deleteCartItem(
+      {
+        where: { id: args.id }
+      },
+      info
+    );
   }
 };
 
