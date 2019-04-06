@@ -1,76 +1,75 @@
-import Nav from './Nav';
-import Link from 'next/link'
-import NProgress from 'nprogress';
-import styled from 'styled-components';
-import Router from 'next/router';
+import React from "react"
+import Nav from "./Nav"
+import Link from "next/link"
+import NProgress from "nprogress"
+import styled from "styled-components"
+import Router from "next/router"
 
-import Cart from './Cart'
+import Search from "./Search"
+import Cart from "./Cart"
 
 Router.onRouteChangeStart = () => {
-    NProgress.start()
+  NProgress.start()
 }
 Router.onRouteChangeComplete = () => {
-    NProgress.done()    
+  NProgress.done()
 }
 Router.onRouteChangeError = () => {
-    NProgress.done()
+  NProgress.done()
 }
 
 const Logo = styled.h1`
-font-style: 4rem;
-margin-left: 2rem;
-position: relative;
-z-index: 2;
-transform: skew(-7deg);
-a{
+  font-style: 4rem;
+  margin-left: 2rem;
+  position: relative;
+  z-index: 2;
+  transform: skew(-7deg);
+  a {
     padding: 0.5rem 1rem;
     background: ${props => props.theme.red};
     color: white;
     text-transform: uppercase;
     text-decoration: none;
-
-}
-@media (max-width: 1300px) {
-    margin:0;
+  }
+  @media (max-width: 1300px) {
+    margin: 0;
     text-align: center;
-}
+  }
 `
 const StyleHeader = styled.header`
-    .bar {
-        border-bottom: 10px solid ${props => props.theme.black};
-        display: grid;
-        grid-template-columns: auto 1fr;
-        justify-content: space-between;
-        align-items: stretch;
-        @media (max-width: 1300px) {
-            grid-template-columns: 1fr;
-            justify-content: center;
-    
-        }
+  .bar {
+    border-bottom: 10px solid ${props => props.theme.black};
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+    align-items: stretch;
+    @media (max-width: 1300px) {
+      grid-template-columns: 1fr;
+      justify-content: center;
     }
-    .sub-bar {
-        display:grid;
-        grid-template-columns: 1fr auto;
-        border-bottom: 1px solid ${props => props.theme.lightgrey};
-    }
+  }
+  .sub-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid ${props => props.theme.lightgrey};
+  }
 `
 
-
 const Header = () => (
-    <StyleHeader>
-        <div className="bar">
-            <Logo>
-                <Link href="/">
-                    <a>Sick Fits</a>
-                </Link>
-            </Logo>
-            <Nav />
-        </div>
-        <div className="sub-bar">
-            <p>Search</p>
-        </div>
-        <Cart />
-    </StyleHeader>)
-
+  <StyleHeader>
+    <div className="bar">
+      <Logo>
+        <Link href="/">
+          <a>Sick Fits</a>
+        </Link>
+      </Logo>
+      <Nav />
+    </div>
+    <div className="sub-bar">
+      <Search />
+    </div>
+    <Cart />
+  </StyleHeader>
+)
 
 export default Header
