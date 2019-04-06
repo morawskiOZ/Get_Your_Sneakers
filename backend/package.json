@@ -32,5 +32,8 @@
     "presets": [
       "env"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-standard-react": "^7.0.2"
   }
 }

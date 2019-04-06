@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import propTypes from "prop-types";
+import React, { Component } from "react"
+import { Mutation } from "react-apollo"
+import gql from "graphql-tag"
+import propTypes from "prop-types"
 
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
-import { CURRENT_USER_QUERY } from "./User";
+import Form from "./styles/Form"
+import Error from "./ErrorMessage"
+import { CURRENT_USER_QUERY } from "./User"
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
@@ -23,19 +23,19 @@ const RESET_MUTATION = gql`
       name
     }
   }
-`;
+`
 
 export default class Reset extends Component {
   static propTypes = {
     resetToken: propTypes.string.isRequired
-  };
+  }
   state = {
     password: "",
     confirmPassword: ""
-  };
+  }
   saveToState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+    this.setState({ [e.target.name]: e.target.value })
+  }
   render() {
     return (
       <Mutation
@@ -55,9 +55,9 @@ export default class Reset extends Component {
           <Form
             method="post"
             onSubmit={async e => {
-              e.preventDefault();
-              await reset();
-              this.setState({ password: "", confirmPassword: "" });
+              e.preventDefault()
+              await reset()
+              this.setState({ password: "", confirmPassword: "" })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
@@ -88,6 +88,6 @@ export default class Reset extends Component {
           </Form>
         )}
       </Mutation>
-    );
+    )
   }
 }
