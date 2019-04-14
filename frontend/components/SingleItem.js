@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import Error from "./ErrorMessage";
-import styled from "styled-components";
-import Head from "next/head";
+import React, { Component } from "react"
+import gql from "graphql-tag"
+import { Query } from "react-apollo"
+import Error from "./ErrorMessage"
+import styled from "styled-components"
+import Head from "next/head"
 
 const SindleItemStyles = styled.div`
   max-width: 1200px;
@@ -22,8 +22,8 @@ const SindleItemStyles = styled.div`
     margin: 3rem;
     font-size: 2rem;
   }
-`;
-const SINGLE_ITEM_QUERY = gql`
+`
+export const SINGLE_ITEM_QUERY = gql`
   query SINGLE_ITEM_QUERY($id: ID!) {
     item(where: { id: $id }) {
       id
@@ -32,17 +32,17 @@ const SINGLE_ITEM_QUERY = gql`
       largeImage
     }
   }
-`;
+`
 
 export default class SingleItem extends Component {
   render() {
     return (
       <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
         {({ error, loading, data }) => {
-          if (error) return <Error error={error} />;
-          if (loading) return <p>Loading...</p>;
-          if (!data.item) return <p> No item found!</p>;
-          const item = data.item;
+          if (error) return <Error error={error} />
+          if (loading) return <p>Loading...</p>
+          if (!data.item) return <p> No item found!</p>
+          const item = data.item
           return (
             <SindleItemStyles>
               <Head>
@@ -54,9 +54,9 @@ export default class SingleItem extends Component {
                 <p>{item.description}</p>
               </div>
             </SindleItemStyles>
-          );
+          )
         }}
       </Query>
-    );
+    )
   }
 }
