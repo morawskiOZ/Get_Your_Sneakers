@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 
-import styled from "styled-components";
+import styled from "styled-components"
 
 const AnimationStyles = styled.span`
   position: relative;
   .count {
     display: block;
     position: relative;
-    transition: all .4s;
+    transition: all 0.4s;
     backface-visibility: hidden;
   }
   .count-enter {
@@ -26,7 +26,7 @@ const AnimationStyles = styled.span`
   .count-exit-active {
     transform: rotateX(0.5turn);
   }
-`;
+`
 
 const Dot = styled.div`
   background: ${props => props.theme.red};
@@ -37,9 +37,9 @@ const Dot = styled.div`
   min-width: 3rem;
   margin-left: 1rem;
   font-weight: 100;
-  font-feature-settings: 'tnum';
+  font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
-`;
+`
 
 const CartCount = ({ count }) => {
   return (
@@ -56,9 +56,9 @@ const CartCount = ({ count }) => {
         </CSSTransition>
       </TransitionGroup>
     </AnimationStyles>
-  );
-};
+  )
+}
 
-CartCount.propTypes = {};
+CartCount.propTypes = {}
 
-export default CartCount;
+export default CartCount

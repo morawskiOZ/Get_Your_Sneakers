@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import styled from "styled-components";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Mutation } from "react-apollo"
+import gql from "graphql-tag"
+import styled from "styled-components"
 
-import { CURRENT_USER_QUERY } from "./User";
+import { CURRENT_USER_QUERY } from "./User"
 
 const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
@@ -12,7 +12,7 @@ const REMOVE_FROM_CART_MUTATION = gql`
       id
     }
   }
-`;
+`
 
 const BigButton = styled.button`
   font-size: 3rem;
@@ -22,22 +22,22 @@ const BigButton = styled.button`
     color: ${props => props.theme.red};
     cursor: pointer;
   }
-`;
+`
 
 export default class RemoveFromCart extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired
-  };
+  }
   // this gets called as soon as we get response back from the server after a mutation
   // has been performed
-  update = (cache, payload)  => {
+  update = (cache, payload) => {
     // read the cache
-    const data = cache.readQuery({ query: CURRENT_USER_QUERY})
+    const data = cache.readQuery({ query: CURRENT_USER_QUERY })
     // remove that item from the cart
     const cartItemId = payload.data.removeFromCart.id
-    data.me.cart = data.me.cart.filter( cartItem => cartItem.id !== cartItemId)
-    //write it back to the cache
-    cache.writeQuery({query: CURRENT_USER_QUERY, data})
+    data.me.cart = data.me.cart.filter(cartItem => cartItem.id !== cartItemId)
+    // write it back to the cache
+    cache.writeQuery({ query: CURRENT_USER_QUERY, data })
   }
   render() {
     return (
@@ -46,10 +46,10 @@ export default class RemoveFromCart extends Component {
         variables={{ id: this.props.id }}
         update={this.update}
         optimisticResponse={{
-          __typename: 'Mutation',
+          __typename: "Mutation",
           removeFromCart: {
-            __typename: 'CartItem',
-            id: this.props.id,
+            __typename: "CartItem",
+            id: this.props.id
           }
         }}
       >
@@ -58,13 +58,13 @@ export default class RemoveFromCart extends Component {
             title="Delete Item"
             disabled={loading}
             onClick={() => {
-              removeFromCart().catch(err => alert(err.message));
+              removeFromCart().catch(err => alert(err.message))
             }}
           >
             x
           </BigButton>
         )}
       </Mutation>
-    );
+    )
   }
 }
