@@ -43,7 +43,6 @@ describe("<PleaseSignedIn>", () => {
     )
     await wait()
     wrapper.update()
-    console.log(wrapper.debug())
     expect(wrapper.find("Test").exists()).toBe(true)
     expect(wrapper.contains(<Test />)).toBe(true)
   })

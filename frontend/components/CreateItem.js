@@ -28,11 +28,11 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
   state = {
-    title: "Cool shoes",
-    description: "I love Nike",
+    title: "",
+    description: "",
     image: "",
     largeImage: "",
-    price: 10
+    price: 0
   }
   handlechange = e => {
     const { name, type, value } = e.target
@@ -60,6 +60,7 @@ class CreateItem extends Component {
       <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
         {(createItem, { loading, error }) => (
           <Form
+            data-test="form"
             onSubmit={async e => {
               // Stop the form from submiting
               e.preventDefault()
