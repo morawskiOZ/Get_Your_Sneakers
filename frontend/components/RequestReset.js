@@ -1,44 +1,43 @@
-import React, { Component } from "react";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import Form from "./styles/Form";
-import Error from "./ErrorMessage";
+import React, { Component } from "react"
+import { Mutation } from "react-apollo"
+import gql from "graphql-tag"
+import Form from "./styles/Form"
+import Error from "./ErrorMessage"
 
-const REQUEST_RESET_MUTATION = gql`
+export const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
     requestReset(email: $email) {
- message
+      message
     }
   }
-`;
+`
 
-export default class Signin extends Component {
+export default class RequestReset extends Component {
   state = {
     email: ""
-  };
+  }
   saveToState = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+    this.setState({ [e.target.name]: e.target.value })
+  }
   render() {
     return (
-      <Mutation
-        mutation={REQUEST_RESET_MUTATION}
-        variables={this.state}
-    
-      >
+      <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
         {(reset, { error, loading, called }) => (
           <Form
+            data-test="form"
             method="post"
             onSubmit={async e => {
-              e.preventDefault();
-              await reset();
-              this.setState({email: ""});
+              e.preventDefault()
+              await reset()
+              this.setState({ email: "" })
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Request a password reset</h2>
               <Error error={error} />
-              {!error && !loading && called && <p>Success! Check your email for a reset link.</p>}
+              {!error && !loading && called && (
+                <p>Success! Check your email for a reset link.</p>
+              )}
               <label htmlFor="email">
                 Email
                 <input
@@ -54,6 +53,6 @@ export default class Signin extends Component {
           </Form>
         )}
       </Mutation>
-    );
+    )
   }
 }
