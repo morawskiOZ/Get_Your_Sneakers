@@ -43,7 +43,7 @@ export default class Order extends Component {
           if (loading) return <p>Loading...</p>
           const order = data.order
           return (
-            <OrderStyles>
+            <OrderStyles data-test="oder">
               <Head>
                 <title>Piotr's shop - Order {order.id}</title>
               </Head>

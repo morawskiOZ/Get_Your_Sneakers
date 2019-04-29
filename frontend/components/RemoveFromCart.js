@@ -6,7 +6,7 @@ import styled from "styled-components"
 
 import { CURRENT_USER_QUERY } from "./User"
 
-const REMOVE_FROM_CART_MUTATION = gql`
+export const REMOVE_FROM_CART_MUTATION = gql`
   mutation removeFromCart($id: ID!) {
     removeFromCart(id: $id) {
       id
