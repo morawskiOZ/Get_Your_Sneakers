@@ -1,3 +1,4 @@
 // This is client side config only - don't put anything in here that shouldn't be public!
-export const endpoint = `http://localhost:4444`;
-export const perPage = 4;
+export const endpoint = `http://localhost:4444`
+export const propdEndpoint = `https://getyourkickprod-66b2b51f11.herokuapp.com/`
+export const perPage = 4
